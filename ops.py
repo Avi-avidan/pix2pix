@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-
 import numpy as np
 import scipy.misc
 import tensorflow as tf
@@ -34,8 +33,8 @@ def show_image(img):
     plt.show()
 
 
-def save_image(img, filedir, i):
-    plt.imsave(filedir + '/epoch-%d.jpg' % i, np.asarray(np.clip((img + 1.)*127.5, 0., 255.), dtype=np.uint8))
+def save_image(img, filedir, i, j=0):
+    plt.imsave(filedir + '/epoch-%d-%d.jpg' % (i, j), np.asarray(np.clip((img + 1.)*127.5, 0., 255.), dtype=np.uint8))
 
 
 def img_preprocess(img, label, fine_size, load_size, is_test=False):

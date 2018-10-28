@@ -63,7 +63,8 @@ def create_netD(img_shape, ndf, filter_size):
     patchGAN.add(Flatten())
     return patchGAN
 
-def create_netG(train_X, tmp_x, ngf, filter_size, image_width, image_height, input_channel, output_channel, batch_size):
+def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, batch_size):
+    (image_width, image_height, input_channel) = img_shape
     encoder_decoder = []
     # encoder
     # C64 256=>128
@@ -200,7 +201,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, image_width, image_height, inp
     dec_conv1 = Conv2DTranspose(ngf * 8, (filter_size, filter_size), 
                         output_shape=(None, int(np.ceil(image_width / 64.)), int(np.ceil(image_height / 64.)), ngf * 8),
                         strides=(2, 2), 
-                                kernel_initializer=my_init(),
+                        kernel_initializer=my_init(),
                         padding='same'
                         )
     dec_bn1 = BatchNormalization(epsilon=1e-5, momentum=0.9)
@@ -220,7 +221,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, image_width, image_height, inp
     dec_conv2 = Conv2DTranspose(ngf * 8, (filter_size, filter_size), 
                         output_shape=(None, int(np.ceil(image_width / 32.)), int(np.ceil(image_height / 32.)), ngf * 8),
                         strides=(2, 2), 
-                                kernel_initializer=my_init(),
+                        kernel_initializer=my_init(),
                         padding='same'
                         )
     dec_bn2 = BatchNormalization(epsilon=1e-5, momentum=0.9)
@@ -240,7 +241,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, image_width, image_height, inp
     dec_conv3 = Conv2DTranspose(ngf * 8, (filter_size, filter_size), 
                         output_shape=(None, int(np.ceil(image_width / 16.)), int(np.ceil(image_height / 16.)), ngf * 8),
                         strides=(2, 2), 
-                                kernel_initializer=my_init(),
+                        kernel_initializer=my_init(),
                         padding='same'
                         )
     dec_bn3 = BatchNormalization(epsilon=1e-5, momentum=0.9)
@@ -259,7 +260,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, image_width, image_height, inp
     dec_conv4 = Conv2DTranspose(ngf * 4, (filter_size, filter_size), 
                         output_shape=(None, int(np.ceil(image_width / 8.)), int(np.ceil(image_height / 8.)), ngf * 4),
                         strides=(2, 2), 
-                                kernel_initializer=my_init(),
+                        kernel_initializer=my_init(),
                         padding='same'
                         )
     dec_bn4 = BatchNormalization(epsilon=1e-5, momentum=0.9)
@@ -280,7 +281,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, image_width, image_height, inp
     dec_conv5 = Conv2DTranspose(ngf * 2, (filter_size, filter_size), 
                         output_shape=(None, int(np.ceil(image_width / 4.)), int(np.ceil(image_height / 4.)), ngf * 2),
                         strides=(2, 2), 
-                                kernel_initializer=my_init(),
+                        kernel_initializer=my_init(),
                         padding='same'
                         )
     dec_bn5 = BatchNormalization(epsilon=1e-5, momentum=0.9)
@@ -299,7 +300,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, image_width, image_height, inp
     dec_conv6 = Conv2DTranspose(ngf, (filter_size, filter_size), 
                         output_shape=(None, int(np.ceil(image_width / 2.)), int(np.ceil(image_height / 2.)), ngf),
                         strides=(2, 2), 
-                                kernel_initializer=my_init(),
+                        kernel_initializer=my_init(),
                         padding='same'
                         )
     dec_bn6 = BatchNormalization(epsilon=1e-5, momentum=0.9)
@@ -313,7 +314,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, image_width, image_height, inp
     dec_output6_ = Concatenate()([dec_output6_, enc_output0_])
 
     #C3 128=>256 last layer tanh
-    dec_conv7 = Conv2DTranspose(output_channel, (filter_size, filter_size), 
+    dec_conv7 = Conv2DTranspose(output_channel, (filter_size, filter_size),
                                 output_shape=(None, image_width, image_height, output_channel),
                                 strides=(2, 2),
                                 kernel_initializer=my_init(),
