@@ -1,6 +1,6 @@
 config = {}
 
-config['batch_size'] = 4
+config['batch_size'] = 32
 config['thread_num'] = 1
 config['data_root'] = '/home/avi/data/train/'
 config['img_inp_shape'] = [256, 256, 3]

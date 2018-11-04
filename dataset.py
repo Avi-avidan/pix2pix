@@ -7,6 +7,7 @@ import numpy as np
 import tensorflow as tf
 import cv2
 from sklearn.utils import shuffle
+from random import randint
 
 
 def download(dataset_name):
@@ -102,8 +103,8 @@ class DLoader(object):
         return img, label
     
     def img_augment(self, img, label):
-        img = scipy.misc.imresize(img, [self.load_size, self.load_size])
-        label = scipy.misc.imresize(label, [self.load_size, self.load_size])
+        img = cv2.resize(img, (self.load_size, self.load_size), interpolation=cv2.INTER_LINEAR)
+        label = cv2.resize(label, (self.load_size, self.load_size), interpolation=cv2.INTER_NEAREST)
 
         h1 = int(np.ceil(np.random.uniform(0, self.load_size-self.fine_size)))
         w1 = int(np.ceil(np.random.uniform(0, self.load_size-self.fine_size)))
@@ -153,7 +154,23 @@ class DLoader(object):
     def get_shape(self):
         return self.img_shape, self.label_shape
     
-
+    def get_batch_imgs(self, train=False, ret_names=False):
+        test_imgs, test_labels, folders = [], [], []
+        for i in range(self.batch_size):
+            if train:
+                folder = self.train_data[randint(0, len(self.train_data)-1)]
+                augment=True
+            else:
+                folder = self.val_data[randint(0, len(self.val_data)-1)]
+                augment=False
+            folders.append(folder)
+            test_img, test_label = self.get_img_label(folder, augment=augment)
+            test_imgs.append(test_img)
+            test_labels.append(test_label)
+        if ret_names:
+            return test_imgs, test_labels, folders
+        else:
+            return np.array(test_imgs), np.array(test_labels)
     
     
     

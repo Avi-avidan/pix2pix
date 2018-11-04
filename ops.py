@@ -11,6 +11,12 @@ def mkdir(dirpath):
         os.mkdir(dirpath)
     return
 
+def plot_batch(train_imgs, train_labels, batch_size):
+    for ind in range(batch_size):
+        f, ax = plt.subplots(1,2, figsize=(12,5))
+        ax[0].imshow(np.array(np.array(train_imgs[ind][:,:,[2,1,0]]+1)*127.5, dtype=np.uint8))
+        ax[1].imshow(np.array(np.array(train_labels[ind][:,:,[2,1,0]]+1)*127.5, dtype=np.uint8))
+        plt.show()
 
 
 def imread(path, is_grayscale = False):
@@ -28,13 +34,16 @@ def load_image(image_path):
     return img_A, img_B
 
 
+def unsclae_img(img):
+    return np.asarray(np.clip((img + 1.)*127.5, 0., 255.), dtype=np.uint8)
+
 def show_image(img):
     plt.imshow(np.asarray(np.clip((img + 1.)*127.5, 0., 255.), dtype=np.uint8))
     plt.show()
 
 
-def save_image(img, filedir, i, j=0):
-    plt.imsave(filedir + '/epoch-%d-%d.jpg' % (i, j), np.asarray(np.clip((img + 1.)*127.5, 0., 255.), dtype=np.uint8))
+def save_image(img, filedir, i, j=0, score=0):
+    plt.imsave(filedir + '/epoch-{}-{}-{:.6}.jpg'.format(i, j, score), np.asarray(np.clip((img + 1.)*127.5, 0., 255.), dtype=np.uint8))
 
 
 def img_preprocess(img, label, fine_size, load_size, is_test=False):

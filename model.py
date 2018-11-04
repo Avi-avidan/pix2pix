@@ -3,7 +3,7 @@ import numpy as np
 from keras.models import Sequential
 from keras import initializers
 from keras.layers import Activation, Flatten, Dropout, Concatenate
-from keras.layers.convolutional import Conv2D, Conv2DTranspose
+from keras.layers import Conv2D, Conv2DTranspose
 from keras.layers.normalization import BatchNormalization
 from keras.layers.advanced_activations import LeakyReLU
 
@@ -22,7 +22,7 @@ def create_netD(img_shape, ndf, filter_size):
     # C64 256=>128
     patchGAN.add(Conv2D(ndf, (filter_size, filter_size), 
                                strides=(2, 2),
-                               padding='same',
+                               padding="same",
                                kernel_initializer=my_init(),
                                input_shape=(image_width, image_height, input_channel)))
     patchGAN.add(LeakyReLU(alpha=0.2))
@@ -31,7 +31,7 @@ def create_netD(img_shape, ndf, filter_size):
     patchGAN.add(Conv2D(ndf * 2, (filter_size, filter_size), 
                                strides=(2, 2),
                                kernel_initializer=my_init(),
-                               padding='same',
+                               padding="same",
                               ))
     patchGAN.add(BatchNormalization())
     patchGAN.add(LeakyReLU(alpha=0.2))
@@ -40,7 +40,7 @@ def create_netD(img_shape, ndf, filter_size):
     patchGAN.add(Conv2D(ndf * 4, (filter_size, filter_size), 
                                strides=(2, 2),
                                kernel_initializer=my_init(),
-                               padding='same',
+                               padding="same",
                               ))
     patchGAN.add(BatchNormalization())
     patchGAN.add(LeakyReLU(alpha=0.2))
@@ -49,7 +49,7 @@ def create_netD(img_shape, ndf, filter_size):
     patchGAN.add(Conv2D(ndf * 8, (filter_size, filter_size), 
                                strides=(1, 1),
                                kernel_initializer=my_init(),
-                               padding='same',
+                               padding="same",
                               ))
     patchGAN.add(BatchNormalization())
     patchGAN.add(LeakyReLU(alpha=0.2))
@@ -57,7 +57,7 @@ def create_netD(img_shape, ndf, filter_size):
     patchGAN.add(Conv2D(1, (filter_size, filter_size), 
                                strides=(1, 1),
                                kernel_initializer=my_init(),
-                               padding='same',
+                               padding="same",
                               ))
     patchGAN.add(Activation('sigmoid'))
     patchGAN.add(Flatten())
@@ -70,7 +70,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
     # C64 256=>128
     enc_conv0 = Conv2D(ngf, (filter_size, filter_size), 
                       strides=(2, 2), 
-                      padding='same', 
+                      padding="same", 
                       kernel_initializer=my_init(),  
                       input_shape=(image_width, image_height, input_channel)
                      )
@@ -83,7 +83,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
     enc_conv1 = Conv2D(ngf * 2, (filter_size, filter_size), 
                       strides=(2, 2), 
                       kernel_initializer=my_init(),
-                      padding='same'
+                      padding="same"
                      )
     enc_bn1 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     leaky_relu1 = LeakyReLU(alpha=0.2)
@@ -97,7 +97,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
     enc_conv2 = Conv2D(ngf * 4, (filter_size, filter_size), 
                       strides=(2, 2), 
                       kernel_initializer=my_init(),
-                      padding='same'
+                      padding="same"
                      )
     enc_bn2 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     leaky_relu2 = LeakyReLU(alpha=0.2)
@@ -111,7 +111,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
     enc_conv3 = Conv2D(ngf * 8, (filter_size, filter_size), 
                       strides=(2, 2), 
                       kernel_initializer=my_init(),
-                      padding='same'
+                      padding="same"
                       )
     enc_bn3 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     leaky_relu3 = LeakyReLU(alpha=0.2)
@@ -124,7 +124,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
     enc_conv4 = Conv2D(ngf * 8, (filter_size, filter_size), 
                       strides=(2, 2), 
                       kernel_initializer=my_init(),
-                      padding='same'
+                      padding="same"
                       )
     enc_bn4 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     leaky_relu4 = LeakyReLU(alpha=0.2)
@@ -136,7 +136,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
     enc_conv5 = Conv2D(ngf * 8, (filter_size, filter_size), 
                       strides=(2, 2), 
                       kernel_initializer=my_init(),
-                      padding='same'
+                      padding="same"
                       )
     enc_bn5 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     leaky_relu5 = LeakyReLU(alpha=0.2)
@@ -149,7 +149,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
     enc_conv6 = Conv2D(ngf * 8, (filter_size, filter_size), 
                       strides=(2, 2), 
                       kernel_initializer=my_init(),
-                      padding='same'
+                      padding="same"
                       )
     enc_bn6 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     leaky_relu6 = LeakyReLU(alpha=0.2)
@@ -165,7 +165,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
     enc_conv7 = Conv2D(ngf * 8, (filter_size, filter_size), 
                       strides=(2, 2), 
                       kernel_initializer=my_init(),
-                      padding='same'
+                      padding="same"
                       )
     enc_bn7 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     leaky_relu7 = LeakyReLU(alpha=0.2)
@@ -181,7 +181,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
                         output_shape=(None, int(np.ceil(image_width / 128.)), int(np.ceil(image_height / 128.)), ngf * 8),
                         strides=(2, 2), 
                         kernel_initializer=my_init(),
-                        padding='same'
+                        padding="same"
                         )
     dec_bn0 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     dropout0 = Dropout(0.5)
@@ -202,7 +202,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
                         output_shape=(None, int(np.ceil(image_width / 64.)), int(np.ceil(image_height / 64.)), ngf * 8),
                         strides=(2, 2), 
                         kernel_initializer=my_init(),
-                        padding='same'
+                        padding="same"
                         )
     dec_bn1 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     dropout1 = Dropout(0.5)
@@ -222,7 +222,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
                         output_shape=(None, int(np.ceil(image_width / 32.)), int(np.ceil(image_height / 32.)), ngf * 8),
                         strides=(2, 2), 
                         kernel_initializer=my_init(),
-                        padding='same'
+                        padding="same"
                         )
     dec_bn2 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     dropout2 = Dropout(0.5)
@@ -242,7 +242,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
                         output_shape=(None, int(np.ceil(image_width / 16.)), int(np.ceil(image_height / 16.)), ngf * 8),
                         strides=(2, 2), 
                         kernel_initializer=my_init(),
-                        padding='same'
+                        padding="same"
                         )
     dec_bn3 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     relu3 = Activation('relu')
@@ -261,7 +261,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
                         output_shape=(None, int(np.ceil(image_width / 8.)), int(np.ceil(image_height / 8.)), ngf * 4),
                         strides=(2, 2), 
                         kernel_initializer=my_init(),
-                        padding='same'
+                        padding="same"
                         )
     dec_bn4 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     relu4 = Activation('relu')
@@ -282,7 +282,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
                         output_shape=(None, int(np.ceil(image_width / 4.)), int(np.ceil(image_height / 4.)), ngf * 2),
                         strides=(2, 2), 
                         kernel_initializer=my_init(),
-                        padding='same'
+                        padding="same"
                         )
     dec_bn5 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     relu5 = Activation('relu')
@@ -301,7 +301,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
                         output_shape=(None, int(np.ceil(image_width / 2.)), int(np.ceil(image_height / 2.)), ngf),
                         strides=(2, 2), 
                         kernel_initializer=my_init(),
-                        padding='same'
+                        padding="same"
                         )
     dec_bn6 = BatchNormalization(epsilon=1e-5, momentum=0.9)
     relu6 = Activation('relu')
@@ -318,7 +318,7 @@ def create_netG(train_X, tmp_x, ngf, filter_size, img_shape, output_channel, bat
                                 output_shape=(None, image_width, image_height, output_channel),
                                 strides=(2, 2),
                                 kernel_initializer=my_init(),
-                                padding='same'
+                                padding="same"
                         )
     dec_tanh = Activation('tanh')
     encoder_decoder += [dec_conv7]
