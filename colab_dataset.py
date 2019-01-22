@@ -43,7 +43,7 @@ class DLoader(object):
         queue_objects = [self.label_data, self.img_data]
         
         self.queue = tf.FIFOQueue(#shapes=None,
-                                  shapes=[self.out_shape, self.img_shape],
+                                  shapes=[self.label_shape, self.img_shape],
                                   dtypes=queue_types,
                                   capacity=100)
         self.enqueue_ops = self.queue.enqueue_many(queue_objects)
