@@ -6,6 +6,7 @@ config['img_inp_shape'] = [None, None, 1]
 config['min_size'] = 512
 config['img_pad_val'] = 0
 config['label_pad_val'] = 0
+config['pad_divisable'] = 32
 
 config['data_root'] = '/content/gdrive/My Drive/viz/takehome'
 config['log_root'] = '/content/gdrive/My Drive/viz/gan_logs'
