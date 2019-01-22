@@ -27,13 +27,11 @@ class DLoader(object):
         self.train_data, self.val_data, self.test_data = self.load_data()
         self.data_size = len(self.train_data)
         self.data_indice = range(self.data_size - 1)
-        
 
-        
         self.img_shape = config['img_inp_shape']
         self.label_shape = config['img_inp_shape']
 
-        self.fine_size = self.img_shape[0]
+        self.fine_size = config['min_size']
         self.load_size = self.fine_size + int(0.11*self.fine_size)
 
         self.img_data = tf.placeholder(tf.float32, shape=[None] + self.img_shape)
