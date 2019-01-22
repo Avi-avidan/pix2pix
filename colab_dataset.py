@@ -50,6 +50,10 @@ class DLoader(object):
             print('in shape:', self.img_shape, 'label shape:', self.out_shape)
             print("load dataset done")
             print('data size: %d' % self.data_size)
+
+    def load_data(self):
+        data = pickle.load(open(self.pickled_data, 'rb'))
+        return data['x_train'], data['x_val'], data['x_test']
     
     def load_img(self, img_path):
         img = imageio.imread(img_path)
