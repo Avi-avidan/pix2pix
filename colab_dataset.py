@@ -7,7 +7,9 @@ import numpy as np
 import tensorflow as tf
 import cv2
 from sklearn.utils import shuffle
-from random import randint
+import imageio
+import random
+import pickle
 
 
 class DLoader(object):
@@ -170,10 +172,10 @@ class DLoader(object):
         test_imgs, test_labels, folders = [], [], []
         for i in range(self.batch_size):
             if train:
-                folder = self.train_data[randint(0, len(self.train_data)-1)]
+                folder = self.train_data[random.randint(0, len(self.train_data)-1)]
                 augment=True
             else:
-                folder = self.val_data[randint(0, len(self.val_data)-1)]
+                folder = self.val_data[random.randint(0, len(self.val_data)-1)]
                 augment=False
             folders.append(folder)
             test_img, test_label = self.get_img_label(folder, augment=augment)
