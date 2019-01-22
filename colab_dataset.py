@@ -36,10 +36,15 @@ class DLoader(object):
 
         self.img_data = tf.placeholder(tf.float32, shape=[None] + self.img_shape)
         self.label_data = tf.placeholder(tf.float32, shape=[None] + self.label_shape)
-        self.queue = tf.FIFOQueue(shapes=[self.label_shape, self.img_shape],
-                                           dtypes=[tf.float32, tf.float32],
-                                           capacity=2000)
-        self.enqueue_ops = self.queue.enqueue_many([self.label_data, self.img_data])
+        
+        queue_types = [tf.float32, tf.float32]
+        queue_objects = [self.label_data, self.img_data]
+        
+        self.queue = tf.FIFOQueue(#shapes=None,
+                                  shapes=[self.out_shape, self.img_shape],
+                                  dtypes=queue_types,
+                                  capacity=100)
+        self.enqueue_ops = self.queue.enqueue_many(queue_objects)
         self.print_load_done()
         
     def print_load_done(self):
